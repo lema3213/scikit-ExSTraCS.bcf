@@ -15,49 +15,44 @@ class CodeFragment:
 
     MAX_DEPTH = 2
 
-    path_l1 = r"../MetaData/CF_L1.csv"
-    path_l2 = r"../MetaData/CF_L2.csv"
-    path_l3 = r"../MetaData/CF_L3.csv"
-    path_l4 = r"../MetaData/CF_L4.csv"
-    path_l5 = r"../MetaData/CF_L5.csv"
-    path_l6 = r"../MetaData/CF_L6.csv"
 
-    try:
-        df = pd.read_csv(path_l1)
-        CF_L1 = df.iloc[:, 0].dropna().astype(str).tolist()
-    except Exception:
-        CF_L1 = []
 
-    try:
-        df = pd.read_csv(path_l2)
-        CF_L2 = df.iloc[:, 0].dropna().astype(str).tolist()
-    except Exception:
-        CF_L2 = []
+    use_tl = False
 
-    try:
-        df = pd.read_csv(path_l3)
-        CF_L3 = df.iloc[:, 0].dropna().astype(str).tolist()
-    except Exception:
-        CF_L3 = []
+    CF_L1 = []
+    CF_L2 = []
+    CF_L3 = []
+    CF_L4 = []
+    CF_L5 = []
 
-    try:
-        df = pd.read_csv(path_l4)
-        CF_L4 = df.iloc[:, 0].dropna().astype(str).tolist()
-    except Exception:
-        CF_L4 = []
+    @staticmethod
+    def read_cfs(index,level):
+        CodeFragment.use_tl = True
+        path_l1 = f"../MetaData/{index}/CF_L1.csv"
+        path_l2 = f"../MetaData/{index}/CF_L2.csv"
+        path_l3 = f"../MetaData/{index}/CF_L3.csv"
+        path_l4 = f"../MetaData/{index}/CF_L4.csv"
+        path_l5 = f"../MetaData/{index}/CF_L5.csv"
 
-    try:
-        df = pd.read_csv(path_l5)
-        CF_L5 = df.iloc[:, 0].dropna().astype(str).tolist()
-    except Exception:
-        CF_L5 = []
+        if level > 1:
+            df = pd.read_csv(path_l1)
+            CodeFragment.CF_L1 = df.iloc[:, 0].dropna().astype(str).tolist()
 
-    try:
-        df = pd.read_csv(path_l6)
-        CF_L6 = df.iloc[:, 0].dropna().astype(str).tolist()
-    except Exception:
-        CF_L6 = []
+        if level > 2:
+            df = pd.read_csv(path_l2)
+            CodeFragment.CF_L2 = df.iloc[:, 0].dropna().astype(str).tolist()
 
+        if level > 3:
+            df = pd.read_csv(path_l3)
+            CodeFragment.CF_L3 = df.iloc[:, 0].dropna().astype(str).tolist()
+
+        if level > 4:
+            df = pd.read_csv(path_l4)
+            CodeFragment.CF_L4 = df.iloc[:, 0].dropna().astype(str).tolist()
+
+        if level > 5:
+            df = pd.read_csv(path_l5)
+            CodeFragment.CF_L5 = df.iloc[:, 0].dropna().astype(str).tolist()
 
 
     """
@@ -131,24 +126,24 @@ class CodeFragment:
                     # Otherwise, choose a lower-level CF (1 .. current_level-1) and reuse it
                     lower_level = random.choice(list(range(1,current_level)))
 
-                    if lower_level == 1 and CodeFragment.CF_L1:
-                        postfix = random.choice(CodeFragment.CF_L1)
-                        child = CodeFragment.fromPostfix(postfix)
-                    elif lower_level == 2 and CodeFragment.CF_L2:
-                        postfix = random.choice(CodeFragment.CF_L2)
-                        child = CodeFragment.fromPostfix(postfix)
-                    elif lower_level == 3 and CodeFragment.CF_L3:
-                        postfix = random.choice(CodeFragment.CF_L3)
-                        child = CodeFragment.fromPostfix(postfix)
-                    elif lower_level == 4 and CodeFragment.CF_L4:
-                        postfix = random.choice(CodeFragment.CF_L4)
-                        child = CodeFragment.fromPostfix(postfix)
-                    elif lower_level == 5 and CodeFragment.CF_L5:
-                        postfix = random.choice(CodeFragment.CF_L5)
-                        child = CodeFragment.fromPostfix(postfix)
-                    elif lower_level == 6 and CodeFragment.CF_L6:
-                        postfix = random.choice(CodeFragment.CF_L6)
-                        child = CodeFragment.fromPostfix(postfix)
+                    if CodeFragment.use_tl:
+                        if lower_level == 1:
+                            postfix = random.choice(CodeFragment.CF_L1)
+                            child = CodeFragment.fromPostfix(postfix)
+                        elif lower_level == 2:
+                            postfix = random.choice(CodeFragment.CF_L2)
+                            child = CodeFragment.fromPostfix(postfix)
+                        elif lower_level == 3:
+                            postfix = random.choice(CodeFragment.CF_L3)
+                            child = CodeFragment.fromPostfix(postfix)
+                        elif lower_level == 4:
+                            postfix = random.choice(CodeFragment.CF_L4)
+                            child = CodeFragment.fromPostfix(postfix)
+                        elif lower_level == 5:
+                            postfix = random.choice(CodeFragment.CF_L5)
+                            child = CodeFragment.fromPostfix(postfix)
+                        else:
+                            raise Exception('Invalid lower level')
                     else:
                         child = CodeFragment._generateRandomTree(variables,max_level,current_level = lower_level)
                     return child

@@ -13,8 +13,8 @@ start_time = time.time()
 print("Timestamp:", start_time)
 
 
-ftrs = "mpr20"
-data_path = r"C:\Users\lema\PycharmProjects\FV\new_dataset/"
+ftrs = "mpr11"
+data_path = r"D:\datasets\mpr/"
 data_path += ''
 file_name = ftrs + ".csv"
 train_file = data_path + "/train/" + file_name
@@ -28,16 +28,16 @@ train_converter = StringEnumerator(train_file,'Class')
 train_headers, train_classLabel, train_dataFeatures, train_dataPhenotypes = train_converter.get_params()
 
 learning_iterations = 20000
-N = 2000
-level = 3
+N = 1000
+level = 2
 
-model = ExSTraCS(learning_iterations=learning_iterations, N=N,level=level,log_dir=log_dir, log_trainingfile_name=log_trainingfile_name)
+model = ExSTraCS(learning_iterations=learning_iterations, N=N,use_tl=1, level=level,log_dir=log_dir, log_trainingfile_name=log_trainingfile_name)
 
 test_converter = StringEnumerator(test_file,'Class')
 test_headers, test_classLabel, test_dataFeatures, test_dataPhenotypes = test_converter.get_params()
 
 print("Model training in progress ...")
-model.fit(train_dataFeatures, train_dataPhenotypes,test_dataFeatures,test_dataPhenotypes)
+model.fit(train_dataFeatures, train_dataPhenotypes)
 print("Model training Ends")
 
 accuracy = model.score(test_dataFeatures,test_dataPhenotypes)

@@ -1,11 +1,29 @@
 import re
 import pandas as pd
+import os
+import sys
+
+# ====== 0) Dataset parameter ======
+# Usage: python script.py mpr6
+import sys
+if len(sys.argv) < 3:
+    raise ValueError("Usage: python script.py <index> <dataset>")
+
+INDEX = int(sys.argv[1])   # index
+DATASET = sys.argv[2]      # dataset
+BASE_DIR = r"../MetaData/"+sys.argv[1]
+os.makedirs(BASE_DIR, exist_ok=True)
+
+# mpr* -> level
+LEVEL_MAP = {"mpr6":1,"mpr11":2,"mpr20":3,"mpr37":4,"mpr70":5,"mpr135":6}
+if DATASET not in LEVEL_MAP:
+    raise ValueError(f"Unknown dataset: {DATASET}")
+LEVEL = LEVEL_MAP[DATASET]
 
 # ====== 1) Load your population CSV ======
-csv_path = r"../test/mpr6_export6.csv"
+csv_path = os.path.join(BASE_DIR, f"{DATASET}_export.csv")
 df = pd.read_csv(csv_path)
 
-# ====== 2) Auto-detect key column names (compatible with different export formats) ======
 cols = list(df.columns)
 
 def pick_col(prefer_names=(), contains_all=()):
@@ -24,18 +42,12 @@ acc_col     = pick_col(prefer_names=("Accuracy",), contains_all=("accuracy",))
 match_col   = pick_col(prefer_names=("Match Count",), contains_all=("match", "count"))
 
 if cond_col is None:
-    cond_col = cols[0]  # Fallback to the first column if nothing matches
+    cond_col = cols[0]
 
-# Force numeric conversion (avoid mean() failure due to strings)
 for c in [fitness_col, acc_col, match_col]:
     if c is not None:
         df[c] = pd.to_numeric(df[c], errors="coerce")
 
-# ====== 3) Select "good classifiers"
-# Criteria (as requested):
-#   fitness > population average fitness
-#   accurate & experienced: Accuracy > average Accuracy AND MatchCount > average MatchCount
-# ======
 avg_fit = df[fitness_col].mean(skipna=True)
 avg_acc = df[acc_col].mean(skipna=True)
 avg_mc  = df[match_col].mean(skipna=True)
@@ -46,36 +58,32 @@ good = df[
     (df[match_col] > avg_mc)
 ].copy()
 
-# ====== 4) Extract CFs: remove dc, deduplicate, remove single-node fragments (e.g., "D16") ======
 bracket_pat = re.compile(r"\[(.*?)\]")
-single_node_pat = re.compile(r"^D\d+$", re.IGNORECASE)  # Single-node: D + number
+single_node_pat = re.compile(r"^D\d+$", re.IGNORECASE)
 
 seen = set()
 cf_list = []
 
 for cell in good[cond_col].astype(str):
-    # Condition is usually like [cf][dc][cf]...
-    frags = bracket_pat.findall(cell)
-    if not frags:
-        # If not in bracketed format, treat the whole cell as one fragment (optional)
-        frags = [cell]
-
+    frags = bracket_pat.findall(cell) or [cell]
     for frag in frags:
         frag = frag.strip()
         if not frag:
             continue
         if frag.lower() == "dc":
             continue
-        if single_node_pat.fullmatch(frag):  # Remove single-node CF
+        if single_node_pat.fullmatch(frag):
             continue
         if frag not in seen:
             seen.add(frag)
             cf_list.append(frag)
 
-# ====== 5) Output: single column, no header ======
-out_path = r"../MetaData/CF_L1.csv"  # .csv is fine
+# ====== 5) Output: CF_L{LEVEL}.csv ======
+out_path = os.path.join(BASE_DIR, f"CF_L{LEVEL}.csv")
 pd.Series(cf_list).to_csv(out_path, index=False, header=False, encoding="utf-8")
 
+print("dataset:", DATASET, "level:", LEVEL)
+print("input:", csv_path)
 print("selected classifiers:", len(good))
 print("final CF count:", len(cf_list))
 print("saved to:", out_path)
