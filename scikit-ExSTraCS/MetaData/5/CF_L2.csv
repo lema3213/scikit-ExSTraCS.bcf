@@ -1,0 +1,109 @@
+D0 D4 D1 | |
+D1 D2 D9 nor D9 D6 nand & nor
+D8 D0 ~ |
+D8 D0 nand D1 D4 nor &
+D0 D8 D1 ~ & nand
+D1 D10 & ~
+D6 D1 &
+D0 ~
+D2 D2 | D1 nor
+D7 D0 &
+D1 D2 nor ~ D2 D7 ~ & nor
+D3 D3 & D1 nand D3 D2 | nand D0 D2 & D7 D2 & nor D5 nand nand
+D9 D9 D3 nor nand
+D0 D2 | ~
+D1 D3 nor ~
+D0 D0 nand D6 nor D0 D10 & nand
+D2 D1 nand D1 ~ nor
+D6 ~
+D3 D3 | D3 nand
+D0 D1 nor D3 ~ nor D3 D1 & ~ | D2 nand
+D0 D5 D1 & nor
+D10 D2 nand ~ D1 ~ |
+D9 ~
+D0 D0 D6 | | D10 D2 D0 nand nor D2 nor &
+D7 ~
+D3 D6 D7 D4 nand nor D0 nor nand
+D1 D1 D2 | nor
+D0 D6 & ~
+D7 D10 nor D8 nor D7 D2 ~ D3 & nand |
+D1 D4 nor ~ D1 D3 D0 | nor |
+D9 D0 nand ~ D0 |
+D6 D1 D6 nor nand
+D4 D2 & ~
+D9 D7 nand D4 D10 & D10 & ~ |
+D7 ~ ~
+D1 ~ ~
+D8 D3 |
+D2 ~
+D3 D2 ~ | ~ ~
+D1 ~ D7 D6 | nand D8 ~ | D2 D7 D3 & nand |
+D1 D2 D2 | |
+D1 ~
+D3 ~ ~ D8 D5 nor D10 | | D6 D10 nand |
+D10 ~
+D4 D6 ~ |
+D8 D1 nand D5 nor ~
+D6 D4 & D3 D10 nand D1 & nand D7 |
+D2 D1 nor ~
+D8 D9 D2 nand nor ~
+D3 D7 D9 & nand D8 D9 | D0 & D0 D9 nand ~ | |
+D1 D2 nor ~ D9 ~ D7 & nor
+D1 D6 nand
+D2 D9 & D5 & ~
+D9 D5 & D10 nor D5 |
+D5 D9 nand D5 D4 nand |
+D3 D10 D10 & D4 D8 nand nand | D9 D6 D10 nor D4 D9 nor & & |
+D2 D9 D0 nand nor
+D0 D8 ~ ~ |
+D2 D6 & D8 nand
+D6 D8 nor D7 nor D1 nor D7 ~ nand
+D0 D2 & ~ D10 & ~
+D4 D9 D2 nand ~ nand
+D4 D2 nor ~ D7 D8 nor nand
+D0 ~ D9 nand
+D7 ~ D7 D7 nor D5 nor nand
+D3 D1 D5 | | D0 &
+D2 D2 | ~
+D0 D6 D10 nand & D10 D9 nand D2 D2 nor | |
+D2 D5 nand D3 D3 | |
+D1 D0 D7 & ~ |
+D5 D4 D6 nand | ~ ~
+D0 D2 nor ~ D3 D6 nand |
+D2 ~ ~ D5 ~ D5 nand nand
+D3 D9 nand
+D6 D1 & D6 nor D2 D9 & D1 ~ | & ~
+D3 ~ D2 D2 | nand
+D10 D3 & ~
+D8 ~ D5 ~ D1 D3 nor | |
+D9 D6 & D5 |
+D10 ~ D5 nand D1 ~ D7 D8 nand | nor D2 D10 D4 nor nor nand
+D0 D5 ~ D0 | nand ~
+D1 D5 | D8 D5 & nand
+D8 D7 D6 nand D1 & nand
+D0 D5 nor D2 ~ |
+D7 ~ D5 D2 | |
+D6 D4 D2 nand ~ & ~
+D6 D5 ~ D3 D9 & | |
+D9 D2 nand
+D6 D8 nand ~ D9 ~ nand
+D2 D3 | D3 |
+D0 D1 ~ ~ nand D7 D10 nor |
+D1 D10 nor D6 D3 | & D0 |
+D4 D0 nand D4 D10 & | D4 nand D0 D8 & nand
+D7 ~ D1 D0 nand |
+D5 D1 nand ~
+D8 D4 & D10 D2 nand nor D9 D8 & D1 | nor D3 D7 | D0 D9 | D0 D10 nand & & |
+D9 D7 nor D9 D6 nor D7 D5 | nor nand
+D1 D0 & D9 D8 | & D2 D9 D5 nor | D8 D4 ~ | nor nand
+D5 D0 | D6 ~ nor D7 D3 | D3 D10 nor nand & D9 D9 D2 nand | D6 nor nand
+D9 D3 D1 nand nand D9 nand
+D4 D4 | D1 D0 | & D3 |
+D7 ~ D6 D4 nand & D4 & ~
+D3 D4 & D1 D8 | nand
+D0 D5 D0 nor nand
+D8 D9 & D7 D9 | nor D1 D2 D3 nand & D0 & nand
+D8 D3 D4 & nor D2 D9 | D8 D6 & | |
+D3 ~ D7 D8 nand nand
+D3 D4 ~ D9 & & ~
+D2 D6 nor D0 nand
